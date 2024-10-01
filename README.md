@@ -1,92 +1,61 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# API de Reconhecimento de Imagens e Tradução
 
-# Serverless Framework Node HTTP API on AWS
+Este projeto foi desenvolvido utilizando Node.js com o framework Serverless e faz uso dos serviços AWS Rekognition e AWS Translate. Ele permite que você envie uma requisição GET com a URL de uma imagem, reconhece os objetos ou cenas presentes na imagem e traduz o resultado para o português.
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+## Funcionalidades
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+- **Reconhecimento de Imagens**: Utiliza o AWS Rekognition para analisar a imagem e detectar objetos, cenas ou textos.
+- **Tradução**: Traduz o texto ou rótulos detectados para o português utilizando o AWS Translate.
+- **API Simples**: Envie uma requisição GET com o parâmetro de query `imageUrl`, e receba uma descrição da imagem traduzida para o português.
 
-## Usage
+## Tecnologias Utilizadas
 
-### Deployment
+- **Node.js**: Ambiente de execução JavaScript para código no lado do servidor.
+- **Framework Serverless**: Utilizado para implantar e gerenciar funções AWS Lambda.
+- **AWS Rekognition**: Serviço usado para análise de imagem e detecção de objetos.
+- **AWS Translate**: Serviço de tradução automática de idiomas.
+- **Axios**: Cliente HTTP baseado em Promises para fazer requisições.
+- **AWS SDK**: Para interagir com os serviços AWS, como Rekognition e Translate.
 
-```
-$ serverless deploy
-```
+## Como Funciona
 
-After deploying, you should see output similar to:
+1. **Envio da Requisição**: Faça uma requisição GET para a API, passando a URL de uma imagem como parâmetro de query (exemplo: `?imageUrl=https://exemplo.com/imagem.jpg`).
+2. **Reconhecimento de Imagem**: A API utiliza o AWS Rekognition para analisar a imagem e detectar objetos ou cenas.
+3. **Tradução**: Os rótulos ou textos detectados são traduzidos para o português usando o AWS Translate.
+4. **Resposta**: Um JSON com a descrição traduzida é retornado.
 
-```bash
-Deploying aws-node-http-api-project to stage dev (us-east-1)
-
-✔ Service deployed to stack aws-node-http-api-project-dev (152s)
-
-endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  hello: aws-node-http-api-project-dev-hello (1.9 kB)
-```
-
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [http event docs](https://www.serverless.com/framework/docs/providers/aws/events/apigateway/).
-
-### Invocation
-
-After successful deployment, you can call the created application via HTTP:
+## Exemplo de Uso
 
 ```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
+GET /recognize?imageUrl=https://exemplo.com/imagem-exemplo.jpg
 ```
 
-Which should result in response similar to the following (removed `input` content for brevity):
+## Exemplo de Resposta
 
-```json
+```bash
 {
-  "message": "Go Serverless v2.0! Your function executed successfully!",
-  "input": {
-    ...
-  }
+  "originalLabels": ["Dog", "Grass", "Outdoor"],
+  "translatedText": "Cachorro, Grama, Ao ar livre"
 }
 ```
 
-### Local development
-
-You can invoke your function locally by using the following command:
+## Instalação
 
 ```bash
-serverless invoke local --function hello
+git clone https://github.com/msc-santos/detect_image.git
+cd detect_image
+
+npm install
 ```
 
-Which should result in response similar to the following:
-
-```
-{
-  "statusCode": 200,
-  "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
-```
-
-
-Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
+## Executando Localmente
 
 ```bash
-serverless plugin install -n serverless-offline
-```
-
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
-
-After installation, you can start local emulation with:
-
-```
 serverless offline
 ```
 
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
+## Implantação
+
+```bash
+serverless deploy
+```
