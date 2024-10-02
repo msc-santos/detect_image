@@ -27,16 +27,7 @@ Este projeto foi desenvolvido utilizando Node.js com o framework Serverless e fa
 ## Exemplo de Uso
 
 ```bash
-GET /recognize?imageUrl=https://exemplo.com/imagem-exemplo.jpg
-```
-
-## Exemplo de Resposta
-
-```bash
-{
-  "originalLabels": ["Dog", "Grass", "Outdoor"],
-  "translatedText": "Cachorro, Grama, Ao ar livre"
-}
+GET /analyse?imageUrl=https://exemplo.com/imagem-exemplo.jpg
 ```
 
 ## Instalação
