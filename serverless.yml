@@ -1,6 +1,4 @@
-org: erickworkspace
-app: hello-sls-framework
-service: image-analysis
+service: detect-image
 frameworkVersion: '3'
 
 provider:
